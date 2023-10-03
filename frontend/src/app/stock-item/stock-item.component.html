@@ -1,0 +1,112 @@
+<div class="register-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Requesting Department</label>
+            <input type="text" formControlName="requestingDepartment" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['requestingDepartment'].errors }" />
+            <div *ngIf="submitted && f['requestingDepartment'].errors" class="invalid-feedback">
+                <div *ngIf="f['requestingDepartment'].errors['required']">requesting Department is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Code</label>
+            <input type="number" formControlName="productCode" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['productCode'].errors }" />
+            <div *ngIf="submitted && f['productCode'].errors" class="invalid-feedback">
+                <div *ngIf="f['productCode'].errors['required']">productCode is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>departmentCode</label>
+            <input type="text" formControlName="departmentCode" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['departmentCode'].errors }" />
+            <div *ngIf="submitted && f['departmentCode'].errors" class="invalid-feedback">
+                <div *ngIf="f['departmentCode'].errors['required']">departmentCode is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Purpose Of Issue</label>
+            <input type="text" formControlName="purposeOfIssue" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['purposeOfIssue'].errors }" />
+            <div *ngIf="submitted && f['purposeOfIssue'].errors" class="invalid-feedback">
+                <div *ngIf="f['purposeOfIssue'].errors['required']">purposeOfIssue is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>itemDescription</label>
+            <input type="text" formControlName="itemDescription" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['itemDescription'].errors }" />
+            <div *ngIf="submitted && f['itemDescription'].errors" class="invalid-feedback">
+                <div *ngIf="f['itemDescription'].errors['required']">
+                    itemDescription is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>dateOfPreviousIssue</label>
+            <input type="date" formControlName="dateOfPreviousIssue" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['dateOfPreviousIssue'].errors }" />
+            <div *ngIf="submitted && f['dateOfPreviousIssue'].errors" class="invalid-feedback">
+                <div *ngIf="f['dateOfPreviousIssue'].errors['required']">
+                    dateOfPreviousIssue is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>previusIssueQuanity</label>
+            <input type="text" formControlName="previusIssueQuanity" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['previusIssueQuanity'].errors }" />
+            <div *ngIf="submitted && f['previusIssueQuanity'].errors" class="invalid-feedback">
+                <div *ngIf="f['previusIssueQuanity'].errors['required']">
+                    previusIssueQuanity is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>estimatedValue</label>
+            <input type="text" formControlName="estimatedValue" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['estimatedValue'].errors }" />
+            <div *ngIf="submitted && f['estimatedValue'].errors" class="invalid-feedback">
+                <div *ngIf="f['estimatedValue'].errors['required']">
+                    estimatedValue is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>signatureImageUrl</label>
+            <input type="text" formControlName="signatureImageUrl" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['signatureImageUrl'].errors }" />
+            <div *ngIf="submitted && f['signatureImageUrl'].errors" class="invalid-feedback">
+                <div *ngIf="f['signatureImageUrl'].errors['required']">
+                    signatureImageUrl is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>quantity</label>
+            <input type="text" formControlName="quantity" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['quantity'].errors }" />
+            <div *ngIf="submitted && f['quantity'].errors" class="invalid-feedback">
+                <div *ngIf="f['quantity'].errors['required']">
+                    quantity is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+                Reset
+            </button>
+        </div>
+    </form>
+</div>

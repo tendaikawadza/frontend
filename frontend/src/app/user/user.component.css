@@ -1,0 +1,101 @@
+
+
+
+button { margin: 0px 10px;
+  padding: 5px 10px;
+
+}
+  .d-flex{
+    display:flex;
+   align-items:center;
+   flex-wrap: wrap;
+   height: 50vh;
+
+  }
+button {
+    
+    border: none ;
+    /*padding:15px 32px ;*/
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 19px;
+    flex:none;
+    border-radius:8px ;
+    border: 2px solid hsl(229, 39%, 49%);
+    background-color:#4CAF50 ;
+    
+
+}
+.footerbtn{
+  display: flex;
+}
+
+::ng-deep .ui-steps .ui-steps-item {
+  width: 25%;
+}
+
+::ng-deep .ui-steps.steps-custom {
+  margin-bottom: 30px;
+}
+
+::ng-deep .ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
+  padding: 0 1em;
+  overflow: visible;
+}
+
+::ng-deep .ui-steps.steps-custom .ui-steps-item .ui-steps-number {
+  background-color: #0081c2;
+  color: #FFFFFF;
+  display: inline-block;
+  width: 36px;
+  border-radius: 50%;
+  margin-top: -14px;
+  margin-bottom: 10px;
+}
+::ng-deep .ui-steps.steps-custom .ui-steps-item .ui-steps-title {
+  color: #555555;
+}
+::ng-deep .p-card .p-card-footer {
+  padding: 1.25rem 0 0 0;
+}
+::ng-deep .justify-content-between {
+  justify-content: space-between!important; 
+    display: flex !important;
+}
+::ng-deep .grid-nogutter {
+  margin-right: 0;
+  margin-left: 0;
+  margin-top: 0;
+
+}
+::ng-deep .justify-content-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::ng-deep .grid-nogutter {
+  margin-right: 0;
+  margin-left: 0;
+  margin-top: 0;
+}
+::ng-deep .grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+::ng-deep .justify-content-between button:nth-child(1){
+  display: flex;
+  flex: 1;
+}
+
+
+#footer-btn, .contentcenter{
+  justify-content: center;
+}
+
+#footer-btn > button {
+  width: 178.09px;
+  height: 41.7px;
+}

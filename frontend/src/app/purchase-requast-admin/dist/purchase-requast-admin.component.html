@@ -1,0 +1,252 @@
+<h1>Purchase Requast</h1>
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+                (click)="openNew()"></button>
+            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+                class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['productName','productDescription','productCode','productCategory']"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th>Product Id</th>
+                <th pSortableColumn="productName" style="min-width:15rem">Product Name </th>
+                <th pSortableColumn="productDesc" style="min-width:10rem">Item Description</th>
+                <th pSortableColumn="productCategory">Sign Status </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+
+
+                <td>{{product.productId}}</td>
+                <td>{{product.productName}}</td>
+                <td>{{product.itemDescription}}</td>
+                <td>{{product.empSign}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{width: 'auto'}" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+
+    <ng-template pTemplate="content">
+        <div class="container purchaform">
+            <form [formGroup]="purchaseRequastForm" id="myform" (ngSubmit)="onSubmit()">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="pid">Product Id</label>
+                        </div>
+                        <div class="col-8">
+                            <input pInputText type="text" formControlName="productId"
+                                [ngClass]="{ 'is-invalid': submitted && f.productId.errors }" />
+                            <div *ngIf="submitted && f.productId.errors" class="invalid-feedback">
+                                <div *ngIf="f.productId.errors.required">Product Id is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="pname">Requesting Depart</label>
+                        </div>
+                        <div class="col-8">
+                            <input pInputText type="text" formControlName="requestingReport"
+                                [ngClass]="{ 'is-invalid': submitted && f.requestingReport.errors }" />
+                            <div *ngIf="submitted && f.requestingReport.errors" class="invalid-feedback">
+                                <div *ngIf="f.requestingReport.errors.required">Requesting Depart is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="punit">Department Code </label>
+                        </div>
+                        <div class="col-8">
+                            <input pInputText type="number" placeholder="Enter Code(Number Only)" min="1"
+                                formControlName="departCode"
+                                [ngClass]="{ 'is-invalid': submitted && f.departCode.errors }" />
+                            <div *ngIf="submitted && f.departCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.departCode.errors.required">Department Code is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description">Purpose Of Issue</label>
+                        </div>
+
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="purposeOfIssue"></textarea>
+                            <div *ngIf="submitted && f.purposeOfIssue.errors" class="invalid-feedback">
+                                <div *ngIf="f.purposeOfIssue.errors.required">Purpose Of Issue is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description"> Item Description</label>
+                        </div>
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="itemDescription"></textarea>
+
+                            <div [hidden]="purchaseRequastForm.controls['itemDescription'].valid || (purchaseRequastForm.controls['itemDescription'].untouched && !submitted)"
+                                class="invalid-feedback">
+                                Item Description is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description">Date Of Previous Issue</label>
+                        </div>
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="datePreviousIssue"></textarea>
+                            <div [hidden]="purchaseRequastForm.controls['datePreviousIssue'].valid || (purchaseRequastForm.controls['datePreviousIssue'].untouched && !submitted)"
+                                class="invalid-feedback">
+                                Date Of Previous Issue is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description"> Previus Issue Quanity</label>
+                        </div>
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="previousIssueQty"></textarea>
+
+                            <div [hidden]="purchaseRequastForm.controls['previousIssueQty'].valid ||
+                                 (purchaseRequastForm.controls['previousIssueQty'].untouched && !submitted)"
+                                class="invalid-feedback">
+                                Previus Issue Quanity is required
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description"> Estimated Value</label>
+                        </div>
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="estimatedValue"></textarea>
+                            <div [hidden]="purchaseRequastForm.controls['estimatedValue'].valid ||
+                                 (purchaseRequastForm.controls['estimatedValue'].untouched && !submitted)"
+                                class="invalid-feedback">
+                                Estimated Value is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description"> Employee Signature</label>
+                        </div>
+                        <div class="col-8 sign">
+                            <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="col-4">
+                            <label for="description"> Quantity
+
+                            </label>
+                        </div>
+                        <div class="col-8">
+                            <textarea [rows]="1" [cols]="30" pInputTextarea [autoResize]="true"
+                                formControlName="quanity"></textarea>
+                            <div [hidden]="purchaseRequastForm.controls['quanity'].valid || 
+                                (purchaseRequastForm.controls['quanity'].untouched && !submitted)"
+                                class="invalid-feedback">
+                                Quantity is required
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </form>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-info" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" type="submit" form="myform" icon="pi pi-check"
+            class="p-button-success"></button>
+    </ng-template>
+
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<!-- <div class="card">
+    <div class="card-body">
+        <div class="container p-5 purchaform">
+           
+        </div>
+    </div>
+</div> -->

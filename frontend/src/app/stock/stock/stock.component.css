@@ -1,0 +1,8 @@
+.register-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container .row{
+    padding: 5px;
+}

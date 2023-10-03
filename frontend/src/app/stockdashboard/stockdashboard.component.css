@@ -1,0 +1,31 @@
+
+    .stockform .p-inputtext {
+    width: 63% !important;
+}
+
+.stockform .p-field{
+    display: flex;
+   padding: 5px;
+}
+.stockform .p-field label{
+    width: 27%;
+}
+
+    ::ng-deep .stockform .p-dropdown .p-dropdown-label {
+    width: 319px !important;
+}
+.topbar {
+    background-color: #333;
+    color: #fff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .topbar p-menu {
+    width: 100%;
+  }
+ 
+  
+

@@ -1,0 +1,138 @@
+<!-- <div  class="d-flex">   
+    <button   type="button" routerLink="/stock" routerLinkActive="true" > AddProduct  </button>
+
+<button   type="button" routerLink="/stockdashboard" routerLinkActive="true" > ViewStock </button> 
+
+<button   type="button" routerLink="/inentoryrequast" routerLinkActive="true" > inentoryrequast </button>
+</div> -->
+
+<p-toast></p-toast>
+
+<div class="card">
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+                (click)="openNew()"></button>
+            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                <button pButton pRipple label="Logout" icon="pi pi-fw pi-power-off" class="p-button-danger logoutbtn p-mr-2"
+                (click)="logout()"></button>
+            </ng-template>
+
+        <ng-template pTemplate="right">
+            
+        </ng-template>
+
+    </p-toolbar>
+
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['productName','productDescription','productCode','productCategory']"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th>Product Id</th>
+                <th pSortableColumn="productName" style="min-width:15rem">Product Name </th>
+
+                <th pSortableColumn="productCode">Product Code </th>
+                <th pSortableColumn="productDescription" style="min-width:10rem">product Description</th>
+                <th pSortableColumn="productCategory">productCategory </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+
+
+                <td>{{product.productId}}</td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCode}}</td>
+                <td>{{product.productDescription}}</td>
+
+                <td>{{product.productCategory}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{width: '650px'}" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+
+    <ng-template pTemplate="content">
+        <form [formGroup]="addProductForm" id="myform" (ngSubmit)="onSubmit()" class="stockform">
+            <div class="p-field">
+                <label for="name">Product Code</label>
+                <input type="text" pInputText formControlName="productCode"
+                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                <div *ngIf="submitted && f.productCode.errors" class="invalid-feedback">
+                    <div *ngIf="f.productCode.errors.required">Product Code is required</div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="name">Product Name</label>
+                <input type="text" pInputText formControlName="productName"
+                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
+                    <div *ngIf="f.productName.errors.required">Product Name is required</div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="name">Product Category</label>
+                <p-dropdown [options]="categoryOpt" formControlName="productCategory" optionLabel="code"
+                    [ngClass]="{ 'is-invalid': submitted && f.productCategory.errors }"></p-dropdown>
+                <div *ngIf="submitted && f.productCategory.errors" class="invalid-feedback">
+                    <div *ngIf="f.productCategory.errors.required">Product Category is required</div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="name">Product Units</label>
+                <input type="text" pInputText formControlName="quantityOnHand"
+                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                <div *ngIf="submitted && f.quantityOnHand.errors" class="invalid-feedback">
+                    <div *ngIf="f.quantityOnHand.errors.required">Quantity On Hand is required</div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="name">Product Description</label>
+                <input type="text" pInputText formControlName="productDescription"
+                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
+                    <div *ngIf="f.productDescription.errors.required">Product Description is required</div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-info" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" type="submit" form="myform" icon="pi pi-check"
+            class="p-button-success"></button>
+    </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

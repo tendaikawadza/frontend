@@ -1,0 +1,1 @@
+{"version":3,"sources":["role.ts"],"names":[],"mappings":";;AAAA,IAAY,IAGX;AAHD,WAAY,IAAI;IACZ,qBAAa,CAAA;IACb,uBAAe,CAAA;AACnB,CAAC,EAHW,IAAI,GAAJ,YAAI,KAAJ,YAAI,QAGf","file":"role.js","sourcesContent":["export enum Role {\r\n    User = 'User',\r\n    Admin = 'Admin'\r\n}"]}

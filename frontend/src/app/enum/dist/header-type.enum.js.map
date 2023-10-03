@@ -1,0 +1,1 @@
+{"version":3,"sources":["header-type.enum.ts"],"names":[],"mappings":";;AAAA,IAAY,UAGT;AAHH,WAAY,UAAU;IAClB,6CAA+B,CAAA;IAC/B,qCAAuB,CAAA;AACzB,CAAC,EAHS,UAAU,GAAV,kBAAU,KAAV,kBAAU,QAGnB","file":"header-type.enum.js","sourcesContent":["export enum HeaderType {\r\n    AUTHORIZATION = 'Authorization',\r\n    JWT_TOKEN = 'Jwt-Token'\r\n  }\r\n  "]}
